@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhay Mishra | Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #0f172a;
+            --secondary: #1e293b;
+            --accent: #7c3aed;
+            --text: #e2e8f0;
+            --text-secondary: #94a3b8;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+            scroll-behavior: smooth;
+        }
+        
+        .hero-text {
+            background: linear-gradient(90deg, #7c3aed, #a855f7, #d946ef);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: gradient 5s ease infinite;
+            background-size: 200% 200%;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(124, 58, 237, 0.1), 0 10px 10px -5px rgba(124, 58, 237, 0.04);
+        }
+        
+        .project-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .project-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.8);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .project-card:hover .project-overlay {
+            opacity: 1;
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .skill-bar {
+            height: 8px;
+            background-color: var(--secondary);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .skill-progress {
+            height: 100%;
+            background: linear-gradient(90deg, #7c3aed, #a855f7);
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -20px;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background-color: var(--accent);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -26px;
+            top: 0;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent);
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: 2px solid var(--accent);
+            white-space: nowrap;
+            animation: typing 3.5s steps(40, end), blink-caret 0.75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--accent) }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-opacity-80 backdrop-blur-md z-50 bg-primary border-b border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <div class="flex-shrink-0 flex items-center">
+                    <span class="text-xl font-bold text-white">Abhay<span class="text-accent">.</span></span>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-8">
+                        <a href="#home" class="nav-link text-white px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="#about" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">About</a>
+                        <a href="#skills" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Skills</a>
+                        <a href="#projects" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Projects</a>
+                        <a href="#experience" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Experience</a>
+                        <a href="#contact" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="md:hidden">
+                    <button type="button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white focus:outline-none" aria-controls="mobile-menu" aria-expanded="false" id="mobile-menu-button">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden bg-primary border-t border-secondary" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#home" class="block px-3 py-2 text-base font-medium text-white">Home</a>
+                <a href="#about" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">About</a>
+                <a href="#skills" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Skills</a>
+                <a href="#projects" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Projects</a>
+                <a href="#experience" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Experience</a>
+                <a href="#contact" class="block px-3 py-2 text-base font-medium text-gray-300 hover:text-white">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="min-h-screen flex items-center justify-center pt-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-primary to-secondary">
+        <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+            <div class="text-center md:text-left">
+                <p class="text-accent mb-4">Hello, I'm</p>
+                <h1 class="text-4xl md:text-6xl font-bold mb-4 hero-text">Abhay Mishra</h1>
+                <h2 class="text-2xl md:text-3xl font-semibold mb-6 typewriter">Full Stack Developer</h2>
+                <p class="text-gray-300 mb-8 max-w-lg">I build exceptional digital experiences that are fast, accessible, visually appealing, and responsive. Let's create something amazing together.</p>
+                <div class="flex flex-wrap gap-4 justify-center md:justify-start">
+                    <a href="#projects" class="px-6 py-3 bg-accent text-white rounded-md font-medium hover:bg-purple-700 transition duration-300">View My Work</a>
+                    <a href="#contact" class="px-6 py-3 border border-accent text-accent rounded-md font-medium hover:bg-accent hover:text-white transition duration-300">Contact Me</a>
+                </div>
+                <div class="flex gap-4 mt-8 justify-center md:justify-start">
+                    <a href="https://github.com/abhaymishracoder" class="text-gray-300 hover:text-white transition duration-300"><i class="fab fa-github fa-lg"></i></a>
+                    <a href="https://www.linkedin.com/in/abhay-mishra-152a42311/" class="text-gray-300 hover:text-white transition duration-300"><i class="fab fa-linkedin fa-lg"></i></a>
+                </div>
+            </div>
+            <div class="hidden md:flex justify-center">
+                <div class="relative w-64 h-64 rounded-full bg-gradient-to-br from-accent to-purple-500 flex items-center justify-center floating">
+                    <div class="absolute inset-0 rounded-full bg-accent opacity-20 animate-ping"></div>
+                    <img src="Screenshot from 2024-12-22 18-28-04.png" alt="Abhay Mishra" class="w-60 h-60 rounded-full object-cover border-4 border-primary">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">About <span class="text-accent">Me</span></h2>
+            <p class="text-gray-400 text-center max-w-3xl mx-auto mb-12">Get to know me better</p>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="flex justify-center">
+                    <div class="relative w-72 h-72 rounded-lg overflow-hidden">
+                        <img src="Screenshot from 2024-12-22 18-28-04.png" alt="Abhay Mishra" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-transparent"></div>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-2xl font-semibold mb-4">Who am I?</h3>
+                    <p class="text-gray-300 mb-6">I'm Abhay Mishra, a passionate Full Stack Developer based in India. With over 2 years of experience in web development, I specialize in creating modern, responsive, and user-friendly applications.</p>
+                    
+                    <div class="grid grid-cols-2 gap-4 mb-6">
+                        <div>
+                            <p class="text-gray-400">Name:</p>
+                            <p class="text-white">Abhay Mishra</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">Email:</p>
+                            <p class="text-white">mishraabhay0101@gmail.com</p>
+                        </div>
+                        <div>
+                            <p class="text-gray-400">From:</p>
+                            <p class="text-white">New Delhi, India</p>
+                        </div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">I'm constantly learning new technologies and frameworks to stay at the forefront of web development. My goal is to build applications that not only meet client requirements but also provide exceptional user experiences.</p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#contact" class="px-6 py-3 border border-accent text-accent rounded-md font-medium hover:bg-accent hover:text-white transition duration-300">Hire Me</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Skills Section -->
+    <section id="skills" class="py-20 px-4 sm:px-6 lg:px-8 bg-primary">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">My <span class="text-accent">Skills</span></h2>
+            <p class="text-gray-400 text-center max-w-3xl mx-auto mb-12">Technologies I work with</p>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Frontend Development</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-300">HTML/CSS</span>
+                                <span class="text-gray-400">95%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 95%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-300">JavaScript</span>
+                                <span class="text-gray-400">90%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 90%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-300">React</span>
+                                <span class="text-gray-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-semibold mb-6">Backend Development</h3>
+                    <div class="space-y-4">
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-300">Node.js</span>
+                                <span class="text-gray-400">88%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 88%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-300">Python</span>
+                                <span class="text-gray-400">85%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 85%"></div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="flex justify-between mb-2">
+                                <span class="text-gray-300">SQL</span>
+                                <span class="text-gray-400">80%</span>
+                            </div>
+                            <div class="skill-bar">
+                                <div class="skill-progress" style="width: 80%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Section -->
+    <section id="projects" class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">My <span class="text-accent">Projects</span></h2>
+            <p class="text-gray-400 text-center max-w-3xl mx-auto mb-12">Some of my recent work</p>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Project 4 -->
+                <div class="project-card card-hover rounded-lg overflow-hidden bg-primary border border-gray-800">
+                    <div class="h-64 overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1551434678-e076c223a692?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80" alt="Project 4" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Portfolio CMS</h3>
+                        <p class="text-gray-300 text-center px-4 mb-4">Content management for creatives</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-accent rounded text-xs">Html</span>
+                            <span class="px-2 py-1 bg-accent rounded text-xs">Css</span>
+                            <span class="px-2 py-1 bg-accent rounded text-xs">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Portfolio CMS</h3>
+                        <p class="text-gray-400 mb-4">A customizable content management system specifically designed for creative professionals to showcase their work.</p>
+                        <div class="flex justify-between">
+                            <a href="#" class="text-accent hover:text-purple-400 transition duration-300">View Project</a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 5 -->
+                <div class="project-card card-hover rounded-lg overflow-hidden bg-primary border border-gray-800">
+                    <div class="h-64 overflow-hidden">
+                        <img src="a-woman-stands-next-to-a-calculator-financial-presentation-audit-or-professional-accounting-service-cost-calculation-electronic-counting-device-cartoon-illustration-vector.jpg" alt="Project 5" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Calculator</h3>
+                        <p class="text-gray-300 text-center px-4 mb-4">Perform mathematical calculations</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-accent rounded text-xs">Html</span>
+                            <span class="px-2 py-1 bg-accent rounded text-xs">Css</span>
+                            <span class="px-2 py-1 bg-accent rounded text-xs">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Calculator</h3>
+                        <p class="text-gray-400 mb-4">An electronic calculator is typically a portable electronic device used to perform calculations, ranging from basic arithmetic to complex mathematics.</p>
+                        <div class="flex justify-between">
+                            <a href="#" class="text-accent hover:text-purple-400 transition duration-300">View Project</a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Project 3 -->
+                <div class="project-card card-hover rounded-lg overflow-hidden bg-primary border border-gray-800">
+                    <div class="h-64 overflow-hidden">
+                        <img src="images.jpeg" alt="Project 6" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                    </div>
+                    <div class="project-overlay">
+                        <h3 class="text-xl font-bold mb-2">Landing Page</h3>
+                        <p class="text-gray-300 text-center px-4 mb-4">About Carbon Emissions</p>
+                        <div class="flex gap-2">
+                            <span class="px-2 py-1 bg-accent rounded text-xs">Html</span>
+                            <span class="px-2 py-1 bg-accent rounded text-xs">Css</span>
+                            <span class="px-2 py-1 bg-accent rounded text-xs">JavaScript</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Landing Page</h3>
+                        <p class="text-gray-400 mb-4">An electronic calculator is typically a portable electronic device used to perform calculations, ranging from basic arithmetic to complex mathematics.</p>
+                        <div class="flex justify-between">
+                            <a href="#" class="text-accent hover:text-purple-400 transition duration-300">View Project</a>
+                            <a href="#" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-github"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="#" class="px-6 py-3 border border-accent text-accent rounded-md font-medium hover:bg-accent hover:text-white transition duration-300">View All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 bg-secondary">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-4">Get In <span class="text-accent">Touch</span></h2>
+            <p class="text-gray-400 text-center max-w-3xl mx-auto mb-12">Let's work together</p>
+            
+            <div class="grid md:grid-cols-2 gap-12">
+                <div>
+                    <h3 class="text-2xl font-semibold mb-6">Contact Information</h3>
+                    <p class="text-gray-300 mb-8">Feel free to reach out to me for any questions or opportunities. I'm always open to discussing new projects, creative ideas or opportunities to be part of your vision.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-full bg-primary text-accent">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-gray-400">Email</h4>
+                                <a href="mailto:abhay@example.com" class="text-white hover:text-accent transition duration-300">mishraabhay0101@gmail.com</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-full bg-primary text-accent">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-gray-400">Phone</h4>
+                                <a href="tel:+919876543210" class="text-white hover:text-accent transition duration-300">+91 63079 66987</a>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start gap-4">
+                            <div class="p-3 rounded-full bg-primary text-accent">
+                                <i class="fas fa-map-marker-alt"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-gray-400">Location</h4>
+                                <p class="text-white">New Delhi, India</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex gap-4 mt-8">
+                        <a href="https://github.com/abhaymishracoder" class="p-3 rounded-full bg-primary text-gray-300 hover:bg-accent hover:text-white transition duration-300"><i class="fab fa-github"></i></a>
+                        <a href="https://www.linkedin.com/in/abhay-mishra-152a42311/" class="p-3 rounded-full bg-primary text-gray-300 hover:bg-accent hover:text-white transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <form class="space-y-6">
+                        <div class="grid md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                                <input type="text" id="name" class="w-full px-4 py-3 bg-primary border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500" placeholder="John Doe">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-gray-300 mb-2">Your Email</label>
+                                <input type="email" id="email" class="w-full px-4 py-3 bg-primary border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500" placeholder="john@example.com">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+                            <input type="text" id="subject" class="w-full px-4 py-3 bg-primary border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500" placeholder="Project Inquiry">
+                        </div>
+                        <div>
+                            <label for="message" class="block text-gray-300 mb-2">Your Message</label>
+                            <textarea id="message" rows="5" class="w-full px-4 py-3 bg-primary border border-gray-700 rounded-md focus:outline-none focus:ring-2 focus:ring-accent text-white placeholder-gray-500" placeholder="Hello Abhay, I would like to discuss..."></textarea>
+                        </div>
+                        <button type="submit" class="w-full px-6 py-3 bg-accent text-white rounded-md font-medium hover:bg-purple-700 transition duration-300">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-8 px-4 sm:px-6 lg:px-8 bg-primary border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <span class="text-xl font-bold text-white">Abhay<span class="text-accent">.</span></span>
+                </div>
+                <div class="text-gray-400 text-sm">
+                    © 2025 Abhay Mishra. All rights reserved.
+                </div>
+                <div class="flex gap-4 mt-4 md:mt-0">
+                    <a href="https://github.com/abhaymishracoder" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-github"></i></a>
+                    <a href="https://www.linkedin.com/in/abhay-mishra-152a42311/" class="text-gray-400 hover:text-white transition duration-300"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+            } else {
+                menu.classList.add('hidden');
+            }
+        });
+
+        // Animate skill bars on scroll
+        document.addEventListener('DOMContentLoaded', function() {
+            const skillBars = document.querySelectorAll('.skill-progress');
+            
+            const animateOnScroll = function() {
+                skillBars.forEach(bar => {
+                    const rect = bar.parentElement.getBoundingClientRect();
+                    if (rect.top <= window.innerHeight * 0.8) {
+                        const width = bar.style.width;
+                        bar.style.width = '0';
+                        setTimeout(() => {
+                            bar.style.width = width;
+                        }, 100);
+                    }
+                });
+            };
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                        
+                        // Close mobile menu if open
+                        const mobileMenu = document.getElementById('mobile-menu');
+                        if (!mobileMenu.classList.contains('hidden')) {
+                            mobileMenu.classList.add('hidden');
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
